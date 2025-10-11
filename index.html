@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Скачать мои программы — GitHub Pages</title>
+  <meta name="description" content="Страница загрузок для программ. Замените список программ в scripts/programs переменной." />
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#7dd3fc}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:linear-gradient(180deg,var(--bg) 0%, #07101a 100%);color:#e6eef6;min-height:100vh;display:flex;flex-direction:column}
+    .container{width:96%;max-width:960px;margin:32px auto}
+    header{display:flex;align-items:center;gap:16px}
+    header svg{width:56px;height:56px}
+    h1{margin:0;font-size:1.6rem}
+    p.lead{color:var(--muted);margin:6px 0 24px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+    .search{flex:1;min-width:180px;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:inherit}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:16px;border-radius:12px;display:flex;flex-direction:column;gap:12px}
+    .meta{display:flex;align-items:center;gap:12px}
+    .meta .icon{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;color:#022; font-weight:700}
+    .title{font-weight:600}
+    .desc{color:var(--muted);font-size:0.92rem}
+    .actions{display:flex;gap:8px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600;text-decoration:none}
+    .btn-download{background:linear-gradient(90deg,#06b6d4,#60a5fa);color:#06202a}
+    .btn-info{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    footer{margin-top:auto;padding:18px 0;text-align:center;color:var(--muted);font-size:0.9rem}
+    @media (max-width:520px){h1{font-size:1.2rem}.meta .icon{width:40px;height:40px}}
+    /* tiny focus styles for keyboard users */
+    a:focus{outline:3px solid rgba(125,211,252,0.18);outline-offset:3px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+        <rect x="2" y="3" width="20" height="14" rx="2" fill="#0ea5e9" opacity="0.12"></rect>
+        <path d="M3 7h18M6 11v6M18 11v6" stroke="#7dd3fc" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <div>
+        <h1>Страница загрузок проектов</h1>
+        <p class="lead">Простой шаблон страницы для GitHub Pages с кнопками скачивания. Редактируйте массив <code>programs</code> внизу.</p>
+      </div>
+    </header>
+
+    <div class="controls">
+      <input id="search" class="search" placeholder="Поиск по названию или описанию… (нажмите Enter)" />
+      <a id="uploadTips" class="btn btn-info" href="#" title="Как загрузить файлы в репозиторий">Как добавить файлы в репозиторий</a>
+      <a id="releasesTips" class="btn btn-info" href="#" title="Рекомендация использовать Releases">Рекомендуем: GitHub Releases</a>
+    </div>
+
+    <main>
+      <div id="grid" class="grid" aria-live="polite"></div>
+      <p id="empty" style="display:none;color:var(--muted);margin-top:12px">Ничего не найдено.</p>
+    </main>
+
+    <footer>
+      Подходит для размещения на <strong>GitHub Pages</strong>. Положите этот файл в корень репозитория (index.html) и добавьте ваши файлы в папку <code>/downloads</code> или используйте GitHub Releases.
+    </footer>
+  </div>
+
+  <script>
+    /***** Настройте этот массив: добавьте свои программы и ссылки на файлы внутри репозитория или внешние URL. *****/
+    const programs = [
+      {
+        id: 'prog1',
+        name: 'Моя программа 1',
+        description: 'Небольшая утилита для автоматизации задач.',
+        file: 'downloads/program1.zip', // замените на путь к вашему файлу в репозитории или на внешнюю ссылку
+        filename: 'program1.zip',
+        version: 'v1.2.0'
+      },
+      {
+        id: 'prog2',
+        name: 'Моя программа 2',
+        description: 'Графический инструмент для…',
+        file: 'downloads/program2.exe',
+        filename: 'program2.exe',
+        version: 'v0.9.1'
+      }
+    ];
+
+    // рендеринг карточек
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+    function render(list){
+      grid.innerHTML = '';
+      if(!list.length){ empty.style.display='block'; return }
+      empty.style.display='none';
+      list.forEach(p=>{
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="meta">
+            <div class="icon">${p.name.slice(0,1).toUpperCase()}</div>
+            <div style="flex:1">
+              <div class="title">${p.name} <span style="font-weight:500;color:var(--muted);font-size:.86rem">${p.version||''}</span></div>
+              <div class="desc">${p.description||''}</div>
+            </div>
+          </div>
+          <div class="actions">
+            <a class="btn btn-download" href="${p.file}" download="${p.filename||''}" rel="noopener noreferrer">⬇ Скачать</a>
+            <a class="btn btn-info" href="${p.file}" target="_blank" rel="noopener noreferrer">Открыть</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      })
+    }
+
+    render(programs);
+
+    // Поиск
+    const search = document.getElementById('search');
+    search.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter') doSearch();
+    });
+    function doSearch(){
+      const q = search.value.trim().toLowerCase();
+      if(!q){ render(programs); return }
+      const filtered = programs.filter(p=> (p.name||'').toLowerCase().includes(q) || (p.description||'').toLowerCase().includes(q) );
+      render(filtered);
+    }
+
+    // советы по загрузке — показываем ссылки на официальные справки GitHub
+    document.getElementById('uploadTips').href = 'https://docs.github.com/en/repositories/working-with-files/adding-a-file-to-a-repository';
+    document.getElementById('releasesTips').href = 'https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases';
+
+    // подсказка: если вы используете GitHub Releases, укажите прямую ссылку на артефакт вместо relative path в programs[].file
+  </script>
+</body>
+</html>
