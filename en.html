@@ -5,7 +5,23 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>My Projects — GitHub Pages</title>
   <style>
-    /* можешь просто скопировать стили из index.html */
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#7dd3fc}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:linear-gradient(180deg,var(--bg) 0%, #07101a 100%);color:#e6eef6;min-height:100vh;display:flex;flex-direction:column}
+    .container{width:96%;max-width:960px;margin:32px auto}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;font-size:1.6rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:16px;border-radius:12px;display:flex;flex-direction:column;gap:12px}
+    .meta{display:flex;align-items:center;gap:12px}
+    .meta .icon{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;color:#022;font-weight:700}
+    .title{font-weight:600}
+    .desc{color:var(--muted);font-size:0.92rem}
+    .actions{display:flex;gap:8px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:600;text-decoration:none}
+    .btn-download{background:linear-gradient(90deg,#06b6d4,#60a5fa);color:#06202a}
+    .btn-github{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
+    footer{margin-top:auto;padding:18px 0;text-align:center;color:var(--muted);font-size:0.9rem}
   </style>
 </head>
 <body>
