@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Projects — GitHub Pages</title>
+  <style>
+    /* можешь просто скопировать стили из index.html */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>My Projects</h1>
+      <p class="lead">Available for Python or Windows executable launch.</p>
+    </header>
+
+    <main>
+      <div id="grid" class="grid"></div>
+    </main>
+  </div>
+
+  <script>
+    const programs = [
+      {
+        id: 'prog1',
+        name: 'PassGenerator',
+        description: 'Password generator utility.',
+        github: 'https://github.com/LEDER555/PassGenerator',
+        download: 'https://github.com/LEDER555/PassGenerator/archive/refs/heads/main.zip',
+        version: 'v1'
+      },
+      {
+        id: 'prog2',
+        name: 'Know your IP',
+        description: 'Get your local or external IP address.',
+        github: 'https://github.com/LEDER555/IP',
+        download: 'https://github.com/LEDER555/IP/archive/refs/heads/main.zip',
+        version: 'v1'
+      }
+    ];
+
+    const grid = document.getElementById('grid');
+    function render(list) {
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="meta">
+            <div class="icon">${p.name[0].toUpperCase()}</div>
+            <div style="flex:1">
+              <div class="title">${p.name} <span style="font-weight:500;color:var(--muted);font-size:.86rem">${p.version||''}</span></div>
+              <div class="desc">${p.description||''}</div>
+            </div>
+          </div>
+          <div class="actions">
+            <a class="btn btn-download" href="${p.download}" download>⬇ Download</a>
+            <a class="btn btn-github" href="${p.github}" target="_blank" rel="noopener noreferrer">🌐 GitHub</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    render(programs);
+  </script>
+</body>
+</html>
