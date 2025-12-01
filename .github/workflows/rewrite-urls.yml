@@ -1,0 +1,30 @@
+name: Rewrite URLs
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  rewrite-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Generate redirects
+        run: |
+          # Создаём файл с редиректами на основе всех HTML-файлов
+          echo "Redirects" > _redirects
+          for file in $(find . -name "*.html"); do
+            # Убираем расширение и добавляем редирект
+            url=$(echo $file | sed 's/\.html$//')
+            echo "$url /$file 301!" >> _redirects
+          done
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          keep_files: false
