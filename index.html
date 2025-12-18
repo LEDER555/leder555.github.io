@@ -48,66 +48,59 @@
     </main>
   </div>
 
-  <script>
-    const programs = [
-      {
-        id: 'prog1',
-        name: 'PassGenerator',
-        description: 'Утилита для генерации паролей.',
-        github: 'https://github.com/LEDER555/PassGenerator',
-        download: 'https://github.com/LEDER555/PassGenerator/archive/refs/heads/main.zip',
-        version: 'v1'
-      },
-      {
-        id: 'prog2',
-        name: 'Know your IP',
-        description: 'Узнайте о вашем IP.',
-        github: 'https://github.com/LEDER555/IP',
-        download: 'https://github.com/LEDER555/IP/raw/refs/heads/v3/IPv3-setup.exe',
-        version: 'v3'
-      },
-      {
-        id: 'prog3',
-        name: 'AutoClicker',
-        description: 'AutoClicker на Python.',
-        github: 'https://github.com/LEDER555/AutoClicker',
-        download: 'https://github.com/LEDER555/AutoClicker/archive/refs/heads/main.zip',
-        version: 'v1'
-      },
-      {
-        id: 'prog4',
-        name: 'MouseJiggler',
-        description: 'MouseJiggler на Python.',
-        github: 'https://github.com/LEDER555/MouseJiggler',
-        download: 'https://github.com/LEDER555/MouseJiggler/archive/refs/heads/main.zip',
-        version: 'v1'
-      }
-    ];
+	<script>
+	const programs = [
+	  {
+		name: 'PassGenerator',
+		description: 'Утилита для генерации паролей.',
+		page: 'pass.ru.html',
+		version: 'v1'
+	  },
+	  {
+		name: 'Know Your IP',
+		description: 'Узнайте ваш IP-адрес.',
+		page: 'ip.ru.html',
+		version: 'v3'
+	  },
+	  {
+		name: 'AutoClicker',
+		description: 'Автокликер на Python.',
+		page: 'autoclicker.ru.html',
+		version: 'v1'
+	  },
+	  {
+		name: 'MouseJiggler',
+		description: 'Предотвращает простой системы.',
+		page: 'mousejiggler.ru.html',
+		version: 'v1'
+	  }
+	];
 
-    const grid = document.getElementById('grid');
-    function render(list) {
-      grid.innerHTML = '';
-      list.forEach(p => {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.innerHTML = `
-          <div class="meta">
-            <div class="icon">${p.name[0].toUpperCase()}</div>
-            <div style="flex:1">
-              <div class="title">${p.name} <span style="font-weight:500;color:var(--muted);font-size:.86rem">${p.version||''}</span></div>
-              <div class="desc">${p.description||''}</div>
-            </div>
-          </div>
-          <div class="actions">
-            <a class="btn btn-download" href="${p.download}" download>⬇ Скачать</a>
-            <a class="btn btn-github" href="${p.github}" target="_blank" rel="noopener noreferrer">🌐 GitHub</a>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
+	const grid = document.getElementById('grid');
+	grid.innerHTML = '';
 
-    render(programs);
-  </script>
+	programs.forEach(p => {
+	  const card = document.createElement('article');
+	  card.className = 'card';
+	  card.innerHTML = `
+		<div class="meta">
+		  <div class="icon">${p.name[0]}</div>
+		  <div style="flex:1">
+			<div class="title">
+			  <a href="${p.page}" style="color:inherit;text-decoration:none">
+				${p.name}
+			  </a>
+			  <span style="color:var(--muted);font-size:.86rem"> ${p.version}</span>
+			</div>
+			<div class="desc">${p.description}</div>
+		  </div>
+		</div>
+		<div class="actions">
+		  <a class="btn btn-download" href="${p.page}">Открыть</a>
+		</div>
+	  `;
+	  grid.appendChild(card);
+	});
+	</script>
 </body>
 </html>
