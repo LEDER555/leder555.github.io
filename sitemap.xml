@@ -1,26 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset 
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- MAIN -->
   <url>
     <loc>https://leder555.github.io/</loc>
-    <lastmod>2025-10-16</lastmod>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://leder555.github.io/video.mp4</loc>
-    <lastmod>2025-10-16</lastmod>
+    <loc>https://leder555.github.io/en.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- PASSGENERATOR -->
+  <url>
+    <loc>https://leder555.github.io/pass.html</loc>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://leder555.github.io/ClaimReward.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <loc>https://leder555.github.io/pass_ru.html</loc>
+    <lastmod>2025-12-18</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- AUTOCLICKER -->
+  <url>
+    <loc>https://leder555.github.io/autoclicker.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://leder555.github.io/autoclicker_ru.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- KNOW YOUR IP -->
+  <url>
+    <loc>https://leder555.github.io/ip.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://leder555.github.io/ip_ru.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- MOUSEJIGGLER -->
+  <url>
+    <loc>https://leder555.github.io/mousejiggler.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://leder555.github.io/mousejiggler_ru.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- OTHER -->
+  <url>
+    <loc>https://leder555.github.io/ClaimReward.html</loc>
+    <lastmod>2025-12-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>
