@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspberry Pi Control</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(180deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #ffffff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 24px;
+            color: #ffffff;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .link-card {
+            background: linear-gradient(135deg, #1e1e1e 0%, #252525 100%);
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .link-card:hover::before {
+            opacity: 1;
+        }
+
+        .link-card:active {
+            transform: translateY(-2px);
+        }
+
+        .link-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+        }
+
+        .link-url {
+            font-size: 13px;
+            color: #888888;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-top: 4px;
+        }
+
+        .icon {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 22px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .status {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 12px;
+            display: none;
+            animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        .status.show {
+            display: block;
+        }
+
+        /* Дополнительные эффекты для карточек */
+        .link-card:nth-child(2) .icon { color: #fbbf24; }
+        .link-card:nth-child(3) .icon { color: #f472b6; }
+        .link-card:nth-child(4) .icon { color: #60a5fa; }
+        .link-card:nth-child(5) .icon { color: #a78bfa; }
+        .link-card:nth-child(6) .icon { color: #34d399; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Raspberry Pi Control</h1>
+        
+        <div class="link-card" onclick="openLink('http://192.168.0.2')">
+            <div class="link-title">
+                <span class="icon">🔐</span>OpenWRT
+            </div>
+        </div>
+
+        <div class="link-card" onclick="openLink('http://192.168.0.190:333/admin/login')">
+            <div class="link-title">
+                <span class="icon">🔑</span>Pi-Hole
+            </div>
+        </div>
+
+        <div class="link-card" onclick="openLink('http://192.168.0.190/dashboard/')">
+            <div class="link-title">
+                <span class="icon">📊</span>Dashboard
+            </div>
+        </div>
+
+        <div class="link-card" onclick="openLink('http://192.168.0.190:9999/')">
+            <div class="link-title">
+                <span class="icon">⚙️</span>TorServer
+            </div>
+        </div>
+
+        <div class="link-card" onclick="openLink('https://releases.yourok.ru/')">
+            <div class="link-title">
+                <span class="icon">📦</span>yourok's Releases
+            </div>
+        </div>
+    </div>
+
+    <div class="status" id="status"></div>
+
+    <script>
+        // Инициализация Telegram Web App
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+
+        // Устанавливаем темный цвет заголовка
+        tg.setHeaderColor('#0f0f0f');
+        tg.setBackgroundColor('#0f0f0f');
+
+        function openLink(url) {
+            try {
+                // Показываем статус
+                showStatus('Открываю...');
+                
+                // Открываем ссылку в Telegram (внутренний браузер)
+                tg.openLink(url);
+                
+            } catch (error) {
+                console.error('Ошибка при открытии ссылки:', error);
+                showStatus('Ошибка открытия');
+            }
+        }
+
+        function showStatus(message) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.classList.add('show');
+            
+            setTimeout(() => {
+                status.classList.remove('show');
+            }, 2000);
+        }
+
+        // Обработка кнопки "Назад" в Telegram
+        tg.BackButton.onClick(() => {
+            tg.close();
+        });
+    </script>
+</body>
+</html>
